@@ -12,7 +12,7 @@ class CameraViewPage extends StatefulWidget {
 
 class _CameraViewPageState extends State<CameraViewPage> {
   late CameraController _cameraController;
-  late Future<void> _initializeControllerFuture;
+  late Future<void> _initializeCameraControllerFuture;
 
   @override
   void initState() {
@@ -23,7 +23,7 @@ class _CameraViewPageState extends State<CameraViewPage> {
       ResolutionPreset.medium,
     );
 
-    _initializeControllerFuture = _cameraController.initialize();
+    _initializeCameraControllerFuture = _cameraController.initialize();
   }
 
   @override
@@ -39,7 +39,7 @@ class _CameraViewPageState extends State<CameraViewPage> {
         title: const Text('Camera View'),
       ),
       body: FutureBuilder<void>(
-        future: _initializeControllerFuture,
+        future: _initializeCameraControllerFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             return CameraPreview(_cameraController);
@@ -51,7 +51,7 @@ class _CameraViewPageState extends State<CameraViewPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           try {
-            await _initializeControllerFuture;
+            await _initializeCameraControllerFuture;
             final image = await _cameraController.takePicture();
             if (!context.mounted) return;
 

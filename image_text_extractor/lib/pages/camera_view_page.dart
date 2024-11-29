@@ -1,6 +1,8 @@
+import 'dart:io';
+
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:image_text_extractor/pages/display_picture_page.dart';
+import 'package:image_text_extractor/pages/display_picture_pre_extration_page.dart';
 import 'package:image_text_extractor/utilities/camera_utils.dart';
 
 class CameraViewPage extends StatefulWidget {
@@ -58,7 +60,8 @@ class _CameraViewPageState extends State<CameraViewPage> {
             await Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => DisplayPicturePage(imagePath: image.path),
+                builder: (context) =>
+                    DisplayPicturePreExtractionPage(imagePath: image.path),
               ),
             );
           } catch (e) {

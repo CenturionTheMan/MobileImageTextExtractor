@@ -1,8 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:image_text_extractor/models/note_collection.dart';
 import 'package:image_text_extractor/pages/camera_view_page.dart';
+import 'package:image_text_extractor/pages/extract_text_page.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    if (!NoteCollection.initialized) {
+      NoteCollection.initialize().then((_) => setState(() {}));
+    }
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused) {
+      NoteCollection.saveToStorage();
+    }
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,14 +45,33 @@ class HomePage extends StatelessWidget {
   }
 
   Center createBody() {
-    return const Center(
+    return Center(
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            'POMIDOR',
-          ),
-        ],
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: NoteCollection.notes.map((note) {
+          return ListTile(
+            title: Text(note.title == '' ? 'No title' : note.title),
+            subtitle: Text(note.content),
+            trailing: IconButton(
+              icon: const Icon(Icons.delete),
+              onPressed: () {
+                NoteCollection.remove(note);
+                setState(() {});
+              },
+            ),
+            onTap: () => {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ExtractTextPage(
+                    imagePath: note.imagePath,
+                    noteItem: note,
+                  ),
+                ),
+              )
+            },
+          );
+        }).toList(),
       ),
     );
   }

@@ -68,14 +68,11 @@ class _ExtractTextPageState extends State<ExtractTextPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              const SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 10),
               createTitle(context),
-              const SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 10),
               createTextSection(context),
+              const SizedBox(height: 10),
             ],
           ),
         ),

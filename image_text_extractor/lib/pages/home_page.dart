@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:image_text_extractor/models/note_collection.dart';
-import 'package:image_text_extractor/models/note_item.dart';
 import 'package:image_text_extractor/pages/camera_view_page.dart';
 import 'package:image_text_extractor/pages/extract_text_page.dart';
 
@@ -12,23 +11,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
-  List<NoteItem> notes = [];
-
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     if (!NoteCollection.initialized) {
-      NoteCollection.initialize().then((_) => setState(() {
-            notes = NoteCollection.notes;
-          }));
+      NoteCollection.initialize().then((_) => setState(() {}));
     }
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      setState(() {
-        notes = NoteCollection.notes;
-      });
-    });
   }
 
   @override
@@ -59,7 +48,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
-        children: notes.map((note) {
+        children: NoteCollection.notes.map((note) {
           return ListTile(
             title: Text(note.title == '' ? 'No title' : note.title),
             subtitle: Text(note.content),

@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'dart:io';
 import 'package:image_text_extractor/models/note_collection.dart';
 import 'package:image_text_extractor/models/note_item.dart';
 import 'package:image_text_extractor/pages/display_picture_page.dart';
@@ -73,12 +74,14 @@ class _ExtractTextPageState extends State<ExtractTextPage> {
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (noTextDetected) {
+        File(widget.imagePath).delete();
         ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text("No text detected!"))
         );
-        Navigator.pushReplacement(
+        Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => const HomePage()),
+            (route) => false,
         );
       }
     });
@@ -90,8 +93,11 @@ class _ExtractTextPageState extends State<ExtractTextPage> {
 
     return PopScope(
       onPopInvokedWithResult: (didPop, result) {
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => const HomePage()));
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => const HomePage()),
+              (route) => false,
+        );
       },
       canPop: false,
       child: Scaffold(

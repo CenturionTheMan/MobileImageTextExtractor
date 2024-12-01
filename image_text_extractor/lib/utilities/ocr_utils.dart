@@ -17,7 +17,7 @@ Future<String> requestImageToText(String imagePath, String language) async {
   List pages = json.decode(resp.body)["ParsedResults"];
   for (var page in pages) {
     String pageText = page["ParsedText"];
-    text += pageText.replaceAll("\n\r", "");
+    text += pageText.replaceAll("\n", "");
   }
   return text;
 }

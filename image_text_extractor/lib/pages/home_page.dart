@@ -39,40 +39,40 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
       appBar: AppBar(
         title: const Text('Image Text Extractor'),
       ),
-      body: createBody(),
+      body: Padding(
+        padding: const EdgeInsets.only(bottom: 80.0),
+        child: createBody(),
+      ),
       floatingActionButton: createFloatingActionButton(context),
     );
   }
 
-  Center createBody() {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: NoteCollection.notes.map((note) {
-          return ListTile(
-            title: Text(note.title == '' ? 'No title' : note.title),
-            subtitle: Text(note.content),
-            trailing: IconButton(
-              icon: const Icon(Icons.delete),
-              onPressed: () {
-                NoteCollection.remove(note);
-                setState(() {});
-              },
-            ),
-            onTap: () => {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ExtractTextPage(
-                    imagePath: note.imagePath,
-                    noteItem: note,
-                  ),
-                ),
-              )
+  Widget createBody() {
+    return ListView(
+      children: NoteCollection.notes.map((note) {
+        return ListTile(
+          title: Text(note.title == '' ? 'No title' : note.title),
+          subtitle: Text(note.content),
+          trailing: IconButton(
+            icon: const Icon(Icons.delete),
+            onPressed: () {
+              NoteCollection.remove(note);
+              setState(() {});
             },
-          );
-        }).toList(),
-      ),
+          ),
+          onTap: () => {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ExtractTextPage(
+                  imagePath: note.imagePath,
+                  noteItem: note,
+                ),
+              ),
+            )
+          },
+        );
+      }).toList(),
     );
   }
 }

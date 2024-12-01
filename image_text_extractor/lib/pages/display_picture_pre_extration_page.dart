@@ -30,35 +30,40 @@ class _DisplayPicturePreExtractionPageState
         title: const Text('Display Picture'),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Image.file(
-            File(widget.imagePath),
-            fit: BoxFit.fill,
+          Expanded(
+            child: Image.file(
+              File(widget.imagePath),
+              fit: BoxFit.scaleDown,
+            ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text('Retake picture'),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ExtractTextPage(
-                        imagePath: widget.imagePath,
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text('Retake picture'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            ExtractTextPage(
+                              imagePath: widget.imagePath,
+                            ),
                       ),
-                    ),
-                  );
-                },
-                child: const Text('Extract text'),
-              ),
-            ],
+                    );
+                  },
+                  child: const Text('Extract text'),
+                ),
+              ],
+            ),
           ),
         ],
       ),

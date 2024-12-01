@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -6,6 +5,8 @@ import 'package:image_text_extractor/models/note_collection.dart';
 import 'package:image_text_extractor/models/note_item.dart';
 import 'package:image_text_extractor/pages/display_picture_page.dart';
 import 'package:image_text_extractor/pages/home_page.dart';
+
+import '../utilities/ocr_utils.dart' as ocr;
 
 class ExtractTextPage extends StatefulWidget {
   const ExtractTextPage({super.key, required this.imagePath, this.noteItem});
@@ -18,31 +19,39 @@ class ExtractTextPage extends StatefulWidget {
 
 class _ExtractTextPageState extends State<ExtractTextPage> {
   TextEditingController textEditingController = TextEditingController();
-  late NoteItem noteItem;
+  NoteItem? noteItem;
+  bool isLoading = true;
+
+  void _loadData() async {
+    String extractedText = await ocr.requestImageToText(
+        widget.imagePath, "pol"
+    );
+
+    setState(() {
+      noteItem = NoteItem(
+        title: '',
+        content: extractedText,
+        imagePath: widget.imagePath,
+      );
+      isLoading = false;
+    });
+    NoteCollection.add(noteItem!);
+  }
 
   @override
   void initState() {
     super.initState();
 
     if (widget.noteItem == null) {
-      // TODO push image through ocr and extract text
-      String extractedText = 'No text extracted';
-
-      setState(() {
-        noteItem = NoteItem(
-          title: '',
-          content: extractedText,
-          imagePath: widget.imagePath,
-        );
-      });
-      NoteCollection.add(noteItem);
+      _loadData();
     } else {
       noteItem = widget.noteItem!;
-      textEditingController.text = noteItem.title;
+      textEditingController.text = noteItem!.title;
+      isLoading = false;
     }
 
     textEditingController.addListener(() {
-      noteItem.title = textEditingController.text;
+      noteItem!.title = textEditingController.text;
     });
   }
 
@@ -54,6 +63,12 @@ class _ExtractTextPageState extends State<ExtractTextPage> {
 
   @override
   Widget build(BuildContext context) {
+    if (isLoading) {
+      return Center(
+          child: CircularProgressIndicator()
+      );
+    }
+
     return PopScope(
       onPopInvokedWithResult: (didPop, result) {
         Navigator.pushReplacement(
@@ -100,7 +115,7 @@ class _ExtractTextPageState extends State<ExtractTextPage> {
     return [
       IconButton(
         onPressed: () {
-          Clipboard.setData(ClipboardData(text: noteItem.content));
+          Clipboard.setData(ClipboardData(text: noteItem!.content));
           ScaffoldMessenger.of(context).showSnackBar(
             snackBarAnimationStyle: AnimationStyle(
               duration: const Duration(milliseconds: 500),
@@ -138,7 +153,7 @@ class _ExtractTextPageState extends State<ExtractTextPage> {
         ),
         child: SingleChildScrollView(
           child: Text(
-            noteItem.content,
+            noteItem!.content,
             style: const TextStyle(fontSize: 16),
           ),
         ),

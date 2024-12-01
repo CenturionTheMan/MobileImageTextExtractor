@@ -21,11 +21,19 @@ class _ExtractTextPageState extends State<ExtractTextPage> {
   TextEditingController textEditingController = TextEditingController();
   NoteItem? noteItem;
   bool isLoading = true;
+  bool noTextDetected = false;
 
   void _loadData() async {
     String extractedText = await ocr.requestImageToText(
         widget.imagePath, "pol"
     );
+
+    if (extractedText.isEmpty) {
+      setState(() {
+        noTextDetected = true;
+      });
+      return;
+    }
 
     setState(() {
       noteItem = NoteItem(
@@ -63,8 +71,19 @@ class _ExtractTextPageState extends State<ExtractTextPage> {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (noTextDetected) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("No text detected!"))
+        );
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const HomePage()),
+        );
+      }
+    });
     if (isLoading) {
-      return Center(
+      return const Center(
           child: CircularProgressIndicator()
       );
     }

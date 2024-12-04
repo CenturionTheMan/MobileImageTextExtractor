@@ -3,6 +3,8 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:image_text_extractor/pages/display_picture_pre_extration_page.dart';
 import 'package:image_text_extractor/utilities/camera_utils.dart';
+import 'package:image_picker/image_picker.dart';
+import '../widgets/header_bar.dart';
 
 class CameraViewPage extends StatefulWidget {
   const CameraViewPage({super.key});
@@ -45,23 +47,42 @@ class _CameraViewPageState extends State<CameraViewPage> {
       _initializeCameraControllerFuture = _cameraController.initialize();
     });
   }
+  Future<void> pickImageFromGallery() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => DisplayPicturePreExtractionPage(imagePath: pickedFile.path),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Camera View'),
-      ),
-      body: FutureBuilder<void>(
-        future: _initializeCameraControllerFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            return CameraPreview(_cameraController);
-          } else {
-            return const Center(child: CircularProgressIndicator());
-          }
-        },
-      ),
+        body: SafeArea(
+          child: Column(
+            children: [
+              HeaderBar(title: 'Camera View'),
+              Expanded(
+                child: FutureBuilder<void>(
+                  future: _initializeCameraControllerFuture,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      return CameraPreview(_cameraController);
+                    } else {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -94,9 +115,16 @@ class _CameraViewPageState extends State<CameraViewPage> {
             tooltip: 'Take a picture',
             child: const Icon(Icons.camera),
           ),
+          const SizedBox(width: 5),
+
+          FloatingActionButton(
+            heroTag: "pickImageBtn",
+            onPressed: pickImageFromGallery,
+            child: const Icon(Icons.image),
+            tooltip: 'Pick image from gallery',
+          ),
         ],
       ),
-
     );
   }
 }

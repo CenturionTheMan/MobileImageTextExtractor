@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:image_text_extractor/models/note_collection.dart';
 import 'package:image_text_extractor/pages/camera_view_page.dart';
 import 'package:image_text_extractor/pages/extract_text_page.dart';
+import '../widgets/header_bar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -36,16 +37,26 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Image Text Extractor'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.only(bottom: 80.0),
-        child: createBody(),
+      body: SafeArea(
+        child: Container(
+          color: Color(0xfff2f2f2),
+          child: Column(
+            children: [
+              HeaderBar(title: 'Image Text Extractor'),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 80.0),
+                  child: createBody(),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
       floatingActionButton: createFloatingActionButton(context),
     );
   }
+
 
   Widget createBody() {
     return ListView(

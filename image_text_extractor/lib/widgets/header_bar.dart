@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class HeaderBar extends StatelessWidget {
   final String title;
 
-  const HeaderBar({
+  const HeaderBar({super.key,
     required this.title
   });
 
@@ -13,10 +13,10 @@ class HeaderBar extends StatelessWidget {
     return Container(
       height: 60,
       decoration: BoxDecoration(
-          color: Color(0xfff2f2f2),
+          color: const Color(0xfff2f2f2),
           boxShadow: [
             BoxShadow(
-                offset: Offset(0, -5),
+                offset: const Offset(0, 2),
                 color: Colors.black.withOpacity(0.3),
                 blurRadius: 4,
                 spreadRadius: 8
@@ -30,7 +30,7 @@ class HeaderBar extends StatelessWidget {
           children: [
             Text(
               title,
-              style: TextStyle(
+              style: const TextStyle(
                   fontSize: 26
               ),
             ),

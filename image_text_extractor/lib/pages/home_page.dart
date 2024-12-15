@@ -39,10 +39,10 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     return Scaffold(
       body: SafeArea(
         child: Container(
-          color: Color(0xfff2f2f2),
+          color: const Color(0xfff2f2f2),
           child: Column(
             children: [
-              HeaderBar(title: 'Image Text Extractor'),
+              const HeaderBar(title: 'Image Text Extractor'),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.only(bottom: 80.0),

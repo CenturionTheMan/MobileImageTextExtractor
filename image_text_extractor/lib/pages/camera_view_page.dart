@@ -67,7 +67,7 @@ class _CameraViewPageState extends State<CameraViewPage> {
         body: SafeArea(
           child: Column(
             children: [
-              HeaderBar(title: 'Camera View'),
+              const HeaderBar(title: 'Camera View'),
               Expanded(
                 child: FutureBuilder<void>(
                   future: _initializeCameraControllerFuture,
@@ -89,8 +89,8 @@ class _CameraViewPageState extends State<CameraViewPage> {
           FloatingActionButton(
             heroTag: "switchCameraButton",
             onPressed: () { changeCamera(); },
-            child: const Icon(Icons.switch_camera_outlined),
             tooltip: "Switch camera",
+            child: const Icon(Icons.switch_camera_outlined),
           ),
           const SizedBox(width: 5),
           FloatingActionButton(
@@ -120,8 +120,8 @@ class _CameraViewPageState extends State<CameraViewPage> {
           FloatingActionButton(
             heroTag: "pickImageBtn",
             onPressed: pickImageFromGallery,
-            child: const Icon(Icons.image),
             tooltip: 'Pick image from gallery',
+            child: const Icon(Icons.image),
           ),
         ],
       ),

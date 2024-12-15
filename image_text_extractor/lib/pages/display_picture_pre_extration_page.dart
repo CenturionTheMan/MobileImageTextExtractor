@@ -30,7 +30,7 @@ class _DisplayPicturePreExtractionPageState
       body: SafeArea(
         child: Column(
           children: [
-            HeaderBar(title: 'Display Picture'),
+            const HeaderBar(title: 'Display Picture'),
             Expanded(
               child: Image.file(
                 File(widget.imagePath),

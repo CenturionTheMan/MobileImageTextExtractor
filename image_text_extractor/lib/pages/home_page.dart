@@ -63,7 +63,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     return ListView(
       children: NoteCollection.notes.map((note) {
         return ListTile(
-          title: Text(note.title == '' ? 'No title' : note.title),
+          title: Text(note.title == '' ? 'No title' : note.title, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
           subtitle: Text(note.content),
           trailing: IconButton(
             icon: const Icon(Icons.delete),

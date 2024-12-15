@@ -103,7 +103,7 @@ class _ExtractTextPageState extends State<ExtractTextPage> {
       canPop: false,
       child: Scaffold(
         appBar: HeaderBar(
-          title: '',
+          title: 'Extracted Text',
           actions: createNavigationButtons(context),
         ),
         body: Center(
@@ -134,6 +134,7 @@ class _ExtractTextPageState extends State<ExtractTextPage> {
             borderSide: BorderSide(color: Colors.black),
           ),
         ),
+        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
       ),
     );
   }
@@ -174,6 +175,7 @@ class _ExtractTextPageState extends State<ExtractTextPage> {
       flex: 1,
       child: Container(
         width: MediaQuery.of(context).size.width * 0.95,
+        padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
           border: Border.all(color: Colors.black),
           borderRadius: BorderRadius.circular(5),

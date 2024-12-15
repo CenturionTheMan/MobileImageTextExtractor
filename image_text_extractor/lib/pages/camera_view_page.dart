@@ -1,4 +1,3 @@
-
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:image_text_extractor/pages/display_picture_pre_extration_page.dart';
@@ -47,6 +46,7 @@ class _CameraViewPageState extends State<CameraViewPage> {
       _initializeCameraControllerFuture = _cameraController.initialize();
     });
   }
+
   Future<void> pickImageFromGallery() async {
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
@@ -64,25 +64,29 @@ class _CameraViewPageState extends State<CameraViewPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SafeArea(
-          child: Column(
-            children: [
-              const HeaderBar(title: 'Camera View'),
-              Expanded(
-                child: FutureBuilder<void>(
-                  future: _initializeCameraControllerFuture,
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      return CameraPreview(_cameraController);
-                    } else {
-                      return const Center(child: CircularProgressIndicator());
-                    }
-                  },
-                ),
+      appBar: const HeaderBar(title: 'Camera View'),
+      body: SafeArea(
+        child: Column(
+          children: [
+            // const HeaderBar(
+            //   title: 'Camera View',
+            //   showBackButton: true,
+            // ),
+            Expanded(
+              child: FutureBuilder<void>(
+                future: _initializeCameraControllerFuture,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    return CameraPreview(_cameraController);
+                  } else {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                },
               ),
-            ],
-          ),
+            ),
+          ],
         ),
+      ),
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

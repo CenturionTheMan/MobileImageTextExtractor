@@ -37,12 +37,13 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: const HeaderBar(title: 'Image Text Extractor'),
       body: SafeArea(
         child: Container(
           color: const Color(0xfff2f2f2),
           child: Column(
             children: [
-              const HeaderBar(title: 'Image Text Extractor'),
+              // const HeaderBar(title: 'Image Text Extractor'),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.only(bottom: 80.0),

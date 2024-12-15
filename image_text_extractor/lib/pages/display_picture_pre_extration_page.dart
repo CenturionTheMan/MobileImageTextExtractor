@@ -27,10 +27,11 @@ class _DisplayPicturePreExtractionPageState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: const HeaderBar(title: 'Confirm Picture'),
       body: SafeArea(
         child: Column(
           children: [
-            const HeaderBar(title: 'Display Picture'),
+            // const HeaderBar(title: 'Display Picture'),
             Expanded(
               child: Image.file(
                 File(widget.imagePath),

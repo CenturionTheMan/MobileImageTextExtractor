@@ -6,6 +6,7 @@ import 'package:image_text_extractor/models/note_collection.dart';
 import 'package:image_text_extractor/models/note_item.dart';
 import 'package:image_text_extractor/pages/display_picture_page.dart';
 import 'package:image_text_extractor/pages/home_page.dart';
+import 'package:image_text_extractor/widgets/header_bar.dart';
 
 import '../utilities/ocr_utils.dart' as ocr;
 
@@ -101,7 +102,8 @@ class _ExtractTextPageState extends State<ExtractTextPage> {
       },
       canPop: false,
       child: Scaffold(
-        appBar: AppBar(
+        appBar: HeaderBar(
+          title: '',
           actions: createNavigationButtons(context),
         ),
         body: Center(

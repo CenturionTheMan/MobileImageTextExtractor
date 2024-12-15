@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:io';
@@ -26,9 +25,11 @@ class _ExtractTextPageState extends State<ExtractTextPage> {
   bool noTextDetected = false;
 
   void _loadData() async {
-    String extractedText = await ocr.requestImageToText(
-        widget.imagePath, "pol"
-    );
+    // String extractedText = await ocr.requestImageToText(
+    //     widget.imagePath, "pol"
+    // );
+
+    String extractedText = await ocr.requestImageToTextMlKit(widget.imagePath);
 
     if (extractedText.isEmpty) {
       setState(() {
@@ -76,20 +77,17 @@ class _ExtractTextPageState extends State<ExtractTextPage> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (noTextDetected) {
         File(widget.imagePath).delete();
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("No text detected!"))
-        );
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text("No text detected!")));
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => const HomePage()),
-            (route) => false,
+          (route) => false,
         );
       }
     });
     if (isLoading) {
-      return const Center(
-          child: CircularProgressIndicator()
-      );
+      return const Center(child: CircularProgressIndicator());
     }
 
     return PopScope(
@@ -97,7 +95,7 @@ class _ExtractTextPageState extends State<ExtractTextPage> {
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => const HomePage()),
-              (route) => false,
+          (route) => false,
         );
       },
       canPop: false,
@@ -108,17 +106,17 @@ class _ExtractTextPageState extends State<ExtractTextPage> {
         ),
         body: Container(
           color: const Color(0xfff2f2f2),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              const SizedBox(height: 10),
-              createTitle(context),
-              const SizedBox(height: 10),
-              createTextSection(context),
-              const SizedBox(height: 10),
-            ],
-          ),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const SizedBox(height: 10),
+                createTitle(context),
+                const SizedBox(height: 10),
+                createTextSection(context),
+                const SizedBox(height: 10),
+              ],
+            ),
           ),
         ),
       ),

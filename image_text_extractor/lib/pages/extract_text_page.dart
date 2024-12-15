@@ -129,6 +129,7 @@ class _ExtractTextPageState extends State<ExtractTextPage> {
         controller: textEditingController,
         decoration: const InputDecoration(
           hintText: 'Title ...',
+          hintStyle: TextStyle(color: Colors.grey),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(5)),
             borderSide: BorderSide(color: Colors.black),

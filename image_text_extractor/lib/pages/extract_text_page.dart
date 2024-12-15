@@ -106,7 +106,9 @@ class _ExtractTextPageState extends State<ExtractTextPage> {
           title: 'Extracted Text',
           actions: createNavigationButtons(context),
         ),
-        body: Center(
+        body: Container(
+          color: const Color(0xfff2f2f2),
+        child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -116,6 +118,7 @@ class _ExtractTextPageState extends State<ExtractTextPage> {
               createTextSection(context),
               const SizedBox(height: 10),
             ],
+          ),
           ),
         ),
       ),
@@ -176,7 +179,7 @@ class _ExtractTextPageState extends State<ExtractTextPage> {
       flex: 1,
       child: Container(
         width: MediaQuery.of(context).size.width * 0.95,
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
         decoration: BoxDecoration(
           border: Border.all(color: Colors.black),
           borderRadius: BorderRadius.circular(5),

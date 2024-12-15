@@ -68,10 +68,6 @@ class _CameraViewPageState extends State<CameraViewPage> {
       body: SafeArea(
         child: Column(
           children: [
-            // const HeaderBar(
-            //   title: 'Camera View',
-            //   showBackButton: true,
-            // ),
             Expanded(
               child: FutureBuilder<void>(
                 future: _initializeCameraControllerFuture,

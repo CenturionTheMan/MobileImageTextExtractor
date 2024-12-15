@@ -43,7 +43,6 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
           color: const Color(0xfff2f2f2),
           child: Column(
             children: [
-              // const HeaderBar(title: 'Image Text Extractor'),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.only(bottom: 80.0),
@@ -62,16 +61,27 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   Widget createBody() {
     return ListView(
       children: NoteCollection.notes.map((note) {
-        return ListTile(
-          title: Text(note.title == '' ? 'No title' : note.title, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
+        return Container(
+            margin: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
+        decoration: BoxDecoration(
+        border: Border.all(color: Colors.black),
+        borderRadius: BorderRadius.circular(5),
+        ),
+          child: ListTile(
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(note.title == '' ? 'No title' : note.title, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                IconButton(
+                  icon: const Icon(Icons.delete),
+                  onPressed: () {
+                    NoteCollection.remove(note);
+                    setState(() {});
+                  },
+                ),
+              ],
+            ),
           subtitle: Text(note.content),
-          trailing: IconButton(
-            icon: const Icon(Icons.delete),
-            onPressed: () {
-              NoteCollection.remove(note);
-              setState(() {});
-            },
-          ),
           onTap: () => {
             Navigator.push(
               context,
@@ -83,6 +93,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
               ),
             )
           },
+        )
         );
       }).toList(),
     );

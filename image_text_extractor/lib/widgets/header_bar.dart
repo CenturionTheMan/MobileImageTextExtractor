@@ -15,7 +15,7 @@ class HeaderBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       actions: actions,
-      title: Text(title),
+      title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 22),),
     );
   }
 

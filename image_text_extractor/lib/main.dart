@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_text_extractor/pages/home_page.dart';
 import 'package:image_text_extractor/utilities/camera_utils.dart';
 
 void main() {
   CameraUtils.initializeCamera();
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    systemNavigationBarColor: Color(0xfff2f2f2), // navigation bar color
+  ));
   runApp(const MyApp());
 }
 

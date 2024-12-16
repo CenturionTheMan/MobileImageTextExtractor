@@ -5,10 +5,12 @@ import 'package:image_text_extractor/utilities/camera_utils.dart';
 
 void main() {
   CameraUtils.initializeCamera();
+  WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     systemNavigationBarColor: Color(0xfff2f2f2), // navigation bar color
   ));
-  runApp(const MyApp());
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((value) => runApp(const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
